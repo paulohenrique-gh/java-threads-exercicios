@@ -4,9 +4,13 @@ import bankingsystem.models.Account;
 
 public class CustomerThread extends Thread {
     private Account account;
+    private double amountToDeposit;
+    private double amountToWithdraw;
 
-    public CustomerThread(Account account) {
+    public CustomerThread(Account account, double amountToDeposit, double amountToWithdraw) {
         this.account = account;
+        this.amountToDeposit = amountToDeposit;
+        this.amountToWithdraw = amountToWithdraw;
     }
 
     public Account getAccount() {
@@ -17,10 +21,23 @@ public class CustomerThread extends Thread {
         this.account = account;
     }
 
+    public double getAmountToDeposit() {
+        return this.amountToDeposit;
+    }
+
+    public double getAmountToWithdraw() {
+        return this.amountToWithdraw;
+    }
+
     @Override
     public void run() {
         super.run();
 
-        // simular excução da transação em uma conta bancária específica
+        int accNumber = this.getAccount().getAccountNumber();
+
+        System.out.println(accNumber + " initial balance: " + account.getBalance());
+
+        this.getAccount().deposit(amountToDeposit);
+        this.getAccount().withdraw(amountToWithdraw);
     }
 }

@@ -1,6 +1,6 @@
 package bankingsystem.models;
 
-import bankingsystem.utils.ConsoleLogger;
+import bankingsystem.utils.SystemLogger;
 import bankingsystem.services.TransactionService;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Account {
     public Account(int accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.transactions = new ArrayList<Transaction>();
+        this.transactions = new ArrayList<>();
     }
 
     public int getAccountNumber() {
@@ -29,7 +29,7 @@ public class Account {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    private void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -43,22 +43,35 @@ public class Account {
 
     // https://www.baeldung.com/java-synchronized
     // https://www.youtube.com/watch?v=HQh0Omi7k7s
-    public void deposit(double amount) {
+    public synchronized void deposit(double amount) {
+        double prevBalance = this.getBalance();
+
+        SystemLogger.logNewDepositHeader(this.getAccountNumber(), amount);
+        SystemLogger.logCurrentBalance(this);
+
         this.setBalance(this.getBalance() + amount);
         this.addTransaction(TransactionService.registerNewDeposit(amount));
-        ConsoleLogger.logSuccessfulDeposit(this);
+
+        SystemLogger.logExpectedBalance(prevBalance + amount);
+        SystemLogger.logCurrentBalance(this);
     }
 
-    public void withdraw(double amount) {
-        double previousBalance = this.getBalance();
+    public synchronized void withdraw(double amount) {
+        double prevBalance = this.getBalance();
+
+        SystemLogger.logNewWithdrawalHeader(this.getAccountNumber(), amount);
+        SystemLogger.logCurrentBalance(this);
+
         this.setBalance(this.getBalance() - amount);
         if (this.getBalance() < 0) {
-            this.setBalance(previousBalance);
-            ConsoleLogger.logInsufficientBalance(this);
+            this.setBalance(prevBalance);
+            SystemLogger.logInsufficientBalance(this.getAccountNumber());
             return;
         }
 
         this.addTransaction(TransactionService.registerNewWithdrawal(amount));
-        ConsoleLogger.logSuccessfulWithdrawal(this);
+
+        SystemLogger.logExpectedBalance(prevBalance - amount);
+        SystemLogger.logCurrentBalance(this);
     }
 }

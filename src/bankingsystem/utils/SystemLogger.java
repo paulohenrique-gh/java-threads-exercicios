@@ -1,21 +1,12 @@
 package bankingsystem.utils;
 
 import bankingsystem.models.Account;
-import bankingsystem.models.Transaction;
 
 import java.time.format.DateTimeFormatter;
 
-public class ConsoleLogger {
-    public static void logInsufficientBalance(Account account){
-        System.out.println(account.getAccountNumber() + ": Insufficient funds for this transaction");
-    }
-
-    public static void logSuccessfulDeposit(Account account){
-        System.out.println(account.getAccountNumber() + ": Deposit successful");
-    }
-
-    public static void logSuccessfulWithdrawal(Account account){
-        System.out.println(account.getAccountNumber() + ": Withdrawal successful");
+public class SystemLogger {
+    public static void logInsufficientBalance(int accountNumber){
+        System.out.println("Account " + accountNumber + ": Insufficient funds for this transaction");
     }
 
     // https://www.w3schools.com/java/java_date.asp
@@ -41,5 +32,21 @@ public class ConsoleLogger {
         });
 
         System.out.println(stringBuilder);
+    }
+
+    public static void logCurrentBalance(Account account) {
+        System.out.println("Account " + account.getAccountNumber() + " current balance: " + account.getBalance());
+    }
+
+    public static void logNewDepositHeader(int accountNumber, double amount) {
+        System.out.println("-> Account " + accountNumber + " New deposit of " + amount + " <-");
+    }
+
+    public static void logNewWithdrawalHeader(int accountNumber, double amount) {
+        System.out.println("-> Account " + accountNumber + " New withdrawal of " + amount + " <-");
+    }
+
+    public static void logExpectedBalance(double expectedBalance) {
+        System.out.println("Expected balance after transaction: " + expectedBalance);
     }
 }
