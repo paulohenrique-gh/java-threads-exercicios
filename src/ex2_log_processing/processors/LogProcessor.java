@@ -1,9 +1,10 @@
-package ex2_log_processing;
+package ex2_log_processing.processors;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -14,6 +15,7 @@ public class LogProcessor implements Callable<Integer> {
 
     public LogProcessor(String filePath, String wordToCount) {
         this.filePath = filePath;
+        this.wordToCount = wordToCount;
         this.lines = new ArrayList<>();
     }
 
@@ -30,10 +32,17 @@ public class LogProcessor implements Callable<Integer> {
         }
     }
 
-    private Integer countOccurrences() {
-        // WIP:
-        return 0;
-
+    private Integer countWordOccurrences() {
+        return this.getLines()
+                .stream()
+                .mapToInt(line -> {
+                    String[] words = line.split(" ");
+                    long occurrences = Arrays.stream(words)
+                            .filter(word -> word.equalsIgnoreCase(this.getWordToCount()))
+                            .count();
+                    return (int) occurrences;
+                })
+                .sum();
     }
 
     public String getFilePath() {
@@ -61,8 +70,8 @@ public class LogProcessor implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
-        // processar arquivo de log para contar as ocorrências de uma palavra específica
-        return 0;
+    public Integer call() {
+        this.readLog();
+        return this.countWordOccurrences();
     }
 }

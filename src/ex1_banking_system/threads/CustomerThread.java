@@ -33,10 +33,6 @@ public class CustomerThread extends Thread {
     public void run() {
         super.run();
 
-        int accNumber = this.getAccount().getAccountNumber();
-
-        System.out.println(accNumber + " initial balance: " + account.getBalance());
-
         this.getAccount().deposit(amountToDeposit);
         this.getAccount().withdraw(amountToWithdraw);
     }
