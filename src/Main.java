@@ -1,13 +1,22 @@
-import bankingsystem.models.Account;
-import bankingsystem.models.Bank;
-import bankingsystem.threads.CustomerThread;
-import bankingsystem.utils.SystemLogger;
+import ex1_banking_system.models.Account;
+import ex1_banking_system.models.Bank;
+import ex1_banking_system.threads.CustomerThread;
+import ex1_banking_system.utils.SystemLogger;
+import ex2_log_processing.LogProcessor;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        // https://dba-presents.com/jvm/java/240-executorservice-how-to-complete-a-task-by-multiple-threads-in-java
+//        ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+        LogProcessor logProcessor = new LogProcessor("src/ex2_log_processing/resources/log.txt", "hacker");
+
+    }
+
+    public static void runExercise1() {
         Account account1 = new Account(123, 500);
         Account account2 = new Account(332, 800);
 
@@ -16,19 +25,19 @@ public class Main {
         bank.addAccount(account2);
 
         List<CustomerThread> account1Threads = Arrays.asList(
-            new CustomerThread(account1, 100, 40),
-            new CustomerThread(account1, 48, 299),
-            new CustomerThread(account1, 192, 92),
-            new CustomerThread(account1, 270, 43)
+                new CustomerThread(account1, 100, 40),
+                new CustomerThread(account1, 48, 299),
+                new CustomerThread(account1, 192, 92),
+                new CustomerThread(account1, 270, 43)
         );
 
         List<CustomerThread> account2Threads = Arrays.asList(
-            new CustomerThread(account2, 30, 3),
-            new CustomerThread(account2, 400, 120),
-            new CustomerThread(account2, 544, 88),
-            new CustomerThread(account2, 484, 110),
-            new CustomerThread(account2, 581, 149),
-            new CustomerThread(account2, 469, 98)
+                new CustomerThread(account2, 30, 3),
+                new CustomerThread(account2, 400, 120),
+                new CustomerThread(account2, 544, 88),
+                new CustomerThread(account2, 484, 110),
+                new CustomerThread(account2, 581, 149),
+                new CustomerThread(account2, 469, 98)
         );
 
         account1Threads.forEach(Thread::start);

@@ -1,7 +1,7 @@
-package bankingsystem.models;
+package ex1_banking_system.models;
 
-import bankingsystem.utils.SystemLogger;
-import bankingsystem.services.TransactionService;
+import ex1_banking_system.utils.SystemLogger;
+import ex1_banking_system.services.TransactionService;
 
 import java.util.ArrayList;
 import java.util.List;

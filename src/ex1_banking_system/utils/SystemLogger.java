@@ -1,6 +1,6 @@
-package bankingsystem.utils;
+package ex1_banking_system.utils;
 
-import bankingsystem.models.Account;
+import ex1_banking_system.models.Account;
 
 import java.time.format.DateTimeFormatter;
 

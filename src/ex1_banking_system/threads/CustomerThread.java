@@ -1,6 +1,6 @@
-package bankingsystem.threads;
+package ex1_banking_system.threads;
 
-import bankingsystem.models.Account;
+import ex1_banking_system.models.Account;
 
 public class CustomerThread extends Thread {
     private Account account;

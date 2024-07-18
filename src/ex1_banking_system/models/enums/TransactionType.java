@@ -1,4 +1,4 @@
-package bankingsystem.models.enums;
+package ex1_banking_system.models.enums;
 
 public enum TransactionType {
     DEPOSIT("Deposit"),

@@ -1,7 +1,7 @@
-package bankingsystem.services;
+package ex1_banking_system.services;
 
-import bankingsystem.models.Transaction;
-import bankingsystem.models.enums.TransactionType;
+import ex1_banking_system.models.Transaction;
+import ex1_banking_system.models.enums.TransactionType;
 
 import java.time.LocalDateTime;
 

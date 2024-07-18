@@ -1,6 +1,6 @@
-package bankingsystem.models;
+package ex1_banking_system.models;
 
-import bankingsystem.utils.SystemLogger;
+import ex1_banking_system.utils.SystemLogger;
 
 import java.util.HashMap;
 import java.util.Map;
