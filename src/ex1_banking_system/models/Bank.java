@@ -13,7 +13,7 @@ public class Bank {
     }
 
     public void addAccount(Account account) {
-
+        this.accounts.put(account.getAccountNumber(), account);
     }
 
     public Map<Integer, Account> getAccounts() {
