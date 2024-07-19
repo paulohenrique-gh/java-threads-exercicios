@@ -6,6 +6,7 @@ import ex2_log_processing.processors.ParallelLogProcessor;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +20,7 @@ public class Main {
         // https://www.baeldung.com/java-synchronized
         // https://www.youtube.com/watch?v=HQh0Omi7k7s
         // https://www.w3schools.com/java/java_date.asp
+        // https://www.baeldung.com/java-merge-streams
 
         Account account1 = new Account(123, 500);
         Account account2 = new Account(332, 800);
@@ -43,22 +45,13 @@ public class Main {
                 new CustomerThread(account2, 469, 98)
         );
 
-        account1Threads.forEach(Thread::start);
-        account2Threads.forEach(Thread::start);
+        Stream.concat(account1Threads.stream(), account2Threads.stream()).forEach(Thread::start);
 
-        account1Threads.forEach(t -> {
+        Stream.concat(account1Threads.stream(), account2Threads.stream()).forEach(t -> {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-
-        account2Threads.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
 
